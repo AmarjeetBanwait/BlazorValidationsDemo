@@ -11,13 +11,11 @@ namespace BlazorValidationsDemo.Helpers
     {
         public override string GetFieldCssClass(EditContext editContext, in FieldIdentifier _fieldIdentifier)
         {
-            var isValid = !editContext.GetValidationMessages(_fieldIdentifier).Any();
+            bool isValid = !editContext.GetValidationMessages(_fieldIdentifier).Any();
 
-            //var _field = fieldIdentifier.
+            bool isModified = editContext.IsModified(_fieldIdentifier);
 
-            var isModified = editContext.IsModified(_fieldIdentifier);
-
-            if (editContext.IsModified(_fieldIdentifier))
+            if (isModified)
             {
                 return isValid ? "modified is-valid" : "modified is-invalid";
             }
