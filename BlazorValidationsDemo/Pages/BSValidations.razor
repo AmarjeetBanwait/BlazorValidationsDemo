@@ -1,0 +1,73 @@
+﻿@page "/bootstrap-validations"
+
+@using Models
+@using BlazorValidationsDemo.Helpers
+<h3>Validations</h3>
+
+
+
+<div class="card">
+    <div class="card-body">
+        <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+
+             <div class="form-group">
+                <label for="FirstNameText">First Name</label>
+                <InputText class="form-control" id="FirstNameText" placeholder="First Name" @bind-Value="person.FirstName" />
+                <ValidationMessage For="@(() => person.FirstName)" />
+            </div>
+
+             <div class="form-group">
+                <label for="LastNameText">Last Name</label>
+                <InputText class="form-control" id="LastNameText" placeholder="Last Name" @bind-Value="person.LastName" />
+                <ValidationMessage For="@(() => person.LastName)" />
+            </div>
+
+             <div class="form-group">
+                <label for="AgeText">Age</label>
+                <InputNumber class="form-control" id="AgeText" placeholder="Age" @bind-Value="person.Age" />
+                <ValidationMessage For="@(() => person.Age)" />
+            </div>
+
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    public Person person = new Person();
+
+    public EditContext editContext;
+
+    protected override void OnInitialized()
+    { 
+        //MainTest();
+        editContext = new EditContext(person);
+        editContext.SetFieldCssClassProvider(new BsFieldClassProvider());
+    }
+
+    private void HandleValidSubmit()
+    {
+
+    }
+
+    void Enroll(in Student _student)
+        {
+            // With in assigning a new object would throw an error
+            // student = new Student();
+
+            // We can still do this with reference types though
+            _student.Enrolled = true;
+        }
+
+        void MainTest()
+        {
+            var student = new Student
+            {
+                Name = "Susan",
+                Enrolled = false
+            };
+
+            Enroll(student);
+        }
+}
